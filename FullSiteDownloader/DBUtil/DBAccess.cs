@@ -1,44 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FullSiteDownloader.DBUtil
 {
     class DBAccess
     {
-        static string MsSqlConnectionString = ConfigurationManager.ConnectionStrings["MsSql"].ConnectionString;
+        private static string mMsSqlConnectionString = ConfigurationManager.ConnectionStrings["MsSql"].ConnectionString;
 
         private SqlConnection CreateMsSqlConnection()
         {
-            return new SqlConnection(MsSqlConnectionString);
-        }
-
-        public string test()
-        {
-            string _result = "";
-            SqlConnection _connection = null;
-            try
-            {
-                _connection = this.CreateMsSqlConnection();
-                _connection.Open();
-                _result = string.Format("数据库版本: {0}\n" +
-                    "状态: {1}", _connection.ServerVersion, _connection.State);
-            }
-            catch (Exception ex)
-            {
-                _result = ex.Message;
-            }
-            finally
-            {
-                if (_connection != null)
-                    _connection.Close();
-            }
-            return _result;
+            return new SqlConnection(mMsSqlConnectionString);
         }
 
         public DataTable ExecSql(string sqlText)
@@ -70,14 +43,39 @@ namespace FullSiteDownloader.DBUtil
             SqlConnection _connection = null;
             try
             {
+                _connection = _connection = this.CreateMsSqlConnection();
                 _connection.Open();
                 SqlCommand _command = new SqlCommand(sqlText, _connection);
                 _result = _command.ExecuteNonQuery();
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 throw;
             }
-            finally {
+            finally
+            {
+                _connection.Close();
+            }
+            return _result;
+        }
+
+        public object ExecScalar(string sqlText)
+        {
+            object _result = null;
+            SqlConnection _connection = null;
+            try
+            {
+                _connection = _connection = this.CreateMsSqlConnection();
+                _connection.Open();
+                SqlCommand _command = new SqlCommand(sqlText, _connection);
+                _result = _command.ExecuteScalar();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
                 _connection.Close();
             }
             return _result;
