@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace FullSiteDownloader.DBUtil
 {
-    class DBAccess
+    class DBAccesser
     {
         private static string mMsSqlConnectionString = ConfigurationManager.ConnectionStrings["MsSql"].ConnectionString;
 

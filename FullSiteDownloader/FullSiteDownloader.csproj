@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBUtil\DBAccess.cs" />
+    <Compile Include="DBUtil\DBAccesser.cs" />
     <Compile Include="DBUtil\DBChecker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
